@@ -17,6 +17,7 @@ faithful emulation of one specific monitor.
 - Single GL pass, no shader chain required
 - Ready-to-use `.glslp` presets — pick one and go
 - Also works in DOSBox-X, plain DOSBox, and RetroArch (see [Usage](#usage))
+- Works on Linux and Windows
 - MIT licensed
 
 ## Table of contents
@@ -72,6 +73,9 @@ which shows up as scanlines/mask landing in the wrong place. Two situations wher
 
 These shaders also work in [DOSBox-X](https://dosbox-x.com/), plain DOSBox (SVN builds), and
 [RetroArch](https://www.retroarch.com/) — see [Usage](#usage) for each.
+
+Works on **Linux and Windows** — the shaders are plain GLSL text files with no platform-specific
+build step, so they work the same wherever the host program's OpenGL renderer runs.
 
 ## Usage
 
