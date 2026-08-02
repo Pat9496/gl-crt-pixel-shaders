@@ -1,13 +1,23 @@
 # gl-crt-pixel-shaders
 
-Single-pass GLSL CRT shaders for pixel-art programs that don't support multipass shader chains —
-built for **ScummVM** and **DOSBox** (Staging).
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Shader format](https://img.shields.io/badge/shader-GLSL%20%2F%20.glslp-informational)
+![Passes](https://img.shields.io/badge/passes-single--pass-informational)
 
-These are modified variants of [Hyllian's CRT shader](https://github.com/libretro/glsl-shaders/tree/master/crt),
-tuned by hand to sit between two extremes: a hard nearest-neighbor upscale (too sharp, not how the
-pixel art was intended to be seen on period CRT hardware) and a fully authentic CRT simulation (heavy
-curvature, bloom, and a strongly visible phosphor mask). The goal is a plausible, general-purpose CRT
-"softening" — not a faithful emulation of any one specific monitor.
+Single-pass GLSL CRT shaders for pixel-art programs that can't do multipass shader chains — built
+for **ScummVM** and **DOSBox**.
+
+Hard nearest-neighbor upscaling makes pixel art sharper than it was ever meant to look — it was
+authored expecting the natural softness of a real CRT. These shaders, modified from
+[Hyllian's CRT shader](https://github.com/libretro/glsl-shaders/tree/master/crt), aim to land between
+that harsh oversharpened look and a fully authentic CRT simulation (heavy curvature, bloom, a
+strongly visible phosphor mask). The goal is a plausible, general-purpose CRT "softening," not a
+faithful emulation of one specific monitor.
+
+- Single GL pass, no shader chain required
+- Ready-to-use `.glslp` presets — pick one and go
+- Also works in DOSBox-X, plain DOSBox, and RetroArch (see [Usage](#usage))
+- MIT licensed
 
 ## Table of contents
 
@@ -16,8 +26,11 @@ curvature, bloom, and a strongly visible phosphor mask). The goal is a plausible
 - [Usage](#usage)
   - [ScummVM](#scummvm)
   - [DOSBox Staging](#dosbox-staging)
+  - [DOSBox-X and plain DOSBox](#dosbox-x-and-plain-dosbox)
+  - [RetroArch](#retroarch)
 - [Tuning](#tuning)
 - [Repository structure](#repository-structure)
+- [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
 
@@ -54,7 +67,11 @@ which shows up as scanlines/mask landing in the wrong place. Two situations wher
 ## Requirements
 
 - [ScummVM](https://www.scummvm.org/) with OpenGL rendering, **or**
-- [DOSBox Staging](https://dosbox-staging.org/) with the OpenGL output enabled.
+- [DOSBox Staging](https://dosbox-staging.org/) with the OpenGL output enabled — **recommended** over
+  the alternatives below.
+
+These shaders also work in [DOSBox-X](https://dosbox-x.com/), plain DOSBox (SVN builds), and
+[RetroArch](https://www.retroarch.com/) — see [Usage](#usage) for each.
 
 ## Usage
 
@@ -87,6 +104,24 @@ To make a shader available under that name:
 
 If the shader fails to compile, DOSBox Staging logs an error/warning to its console output.
 
+### DOSBox-X and plain DOSBox
+
+[DOSBox-X](https://dosbox-x.com/) and plain DOSBox (SVN builds) support the same `glshader` config
+option and `glshaders` folder as DOSBox Staging — follow the steps above verbatim. DOSBox Staging is
+still the recommended target of the two; use DOSBox-X or plain DOSBox only if you're already
+committed to one of those for other reasons.
+
+### RetroArch
+
+[RetroArch](https://www.retroarch.com/)'s GL driver loads `.glslp` presets natively — this is the
+format's home ecosystem, so any preset here works unmodified via Quick Menu → Shaders → Load Shader
+Preset. That said, if you're already in RetroArch you have a better option: RetroArch's own
+[slang-shaders](https://github.com/libretro/slang-shaders) support multipass chains and generally
+produce a noticeably better result than what's possible in a single GLSL pass. If you're on RetroArch,
+use
+**[crt-guest-advanced](https://github.com/libretro/slang-shaders/tree/master/crt/shaders/guest/advanced)**
+instead of the shaders in this repo.
+
 ## Tuning
 
 Each shader exposes its adjustable values as `#pragma parameter` entries near the top of the file —
@@ -102,6 +137,11 @@ crt-hyllian*.glslp          Root-level presets (single-pass, ready to use)
 shaders/hyllian/
   crt-hyllian*.glsl          Shader variants (see table above)
 ```
+
+## Contributing
+
+Contributions are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to propose a change and
+what to check before opening a pull request.
 
 ## Credits
 
