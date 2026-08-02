@@ -58,7 +58,7 @@ which shows up as scanlines/mask landing in the wrong place. Two situations wher
   real VGA hardware actually rendered — each line genuinely gets doubled — which is accurate to the
   original hardware, but it means the shader is fed twice as many lines as the game's real pixel
   grid, so the scanline pattern ends up misaligned. Pick the fixed-resolution preset matching the
-  game's actual resolution (e.g. `crt-hyllian_400p.glslp` for 320×400 DOS titles).
+  game's actual resolution (e.g. `crt-hyllian_200p.glslp` for 320×200 DOS titles).
 - **ScummVM games that render internally at a higher resolution than their intended low-res look** —
   notably AGS (Adventure Game Studio) titles, which are often built to look like an early-90s
   low-resolution game but render at a higher internal resolution. Use the fixed-resolution preset
@@ -82,9 +82,8 @@ These shaders also work in [DOSBox-X](https://dosbox-x.com/), plain DOSBox (SVN 
    `.glslp` files (e.g. `crt-hyllian.glslp`).
 3. Confirm the preview and keep the shader when prompted.
 
-The `.glslp` file references its shader by a relative path (e.g. `shaders/hyllian/crt-hyllian.glsl`),
-so keep the folder structure intact — if you move the `.glslp` file without its `shaders/` folder,
-update the path inside it or the shader will fail to load.
+Every `.glslp` references its shader by bare filename (e.g. `crt-hyllian.glsl`), since all files live
+in one flat folder — if you move a `.glslp` file on its own, take its matching `.glsl` file with it.
 
 ### DOSBox Staging
 
@@ -98,8 +97,8 @@ glshader = crt-hyllian
 
 To make a shader available under that name:
 
-1. Copy the desired file from `shaders/hyllian/` (e.g. `crt-hyllian.glsl`) into DOSBox Staging's
-   `glshaders` subdirectory inside its configuration directory, or into the DOSBox root directory.
+1. Copy the desired `.glsl` file (e.g. `crt-hyllian.glsl`) into DOSBox Staging's `glshaders`
+   subdirectory inside its configuration directory, or into the DOSBox root directory.
 2. Set `glshader` to the filename **without** the `.glsl` extension, as shown above.
 
 If the shader fails to compile, DOSBox Staging logs an error/warning to its console output.
@@ -132,10 +131,11 @@ for the `#pragma parameter` block to see its full set and value ranges.
 
 ## Repository structure
 
+Everything lives in one flat folder — no subfolders:
+
 ```
-crt-hyllian*.glslp          Root-level presets (single-pass, ready to use)
-shaders/hyllian/
-  crt-hyllian*.glsl          Shader variants (see table above)
+crt-hyllian*.glslp          Presets (single-pass, ready to use)
+crt-hyllian*.glsl           Shader variants (see table above)
 ```
 
 ## Contributing
